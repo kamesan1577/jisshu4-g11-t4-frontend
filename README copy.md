@@ -1,7 +1,3 @@
-# Hate Abate(仮)
-## 概要
-ツイート中の不適切な発言を検出し、修正するChrome拡張機能です
-
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
 ## Getting Started
