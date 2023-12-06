@@ -1,5 +1,6 @@
 import { viewSuggestion } from "./suggest"
-import { checkTextGpt, createFixTextGpt, checkTimelineTextGpt } from "./gpt"
+import { checkTextGpt, createFixTextGpt } from "./gpt"
+import { checkTimelinePost, getTimelinePostList } from "./getTimelinePost"
 import type { PlasmoCSConfig } from "plasmo"
  
 export const config: PlasmoCSConfig = {
@@ -42,10 +43,10 @@ const setPostButtonStyle = () => {
     console.log("Button pressed!");
     // ここにボタンが押された時の追加の処理を書くことができます
     if (!isSuggestions) {
-      let checkTimelineTextGptResult = await checkTimelineTextGpt()
+      let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
       console.log(checkTimelineTextGptResult)
       isSuggestions = true;
-      console.log("Checking...");
+      console.log("Text Checking...");
       try {
         let checkTextGptResult = await checkTextGpt();
 

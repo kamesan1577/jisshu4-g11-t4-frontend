@@ -50,7 +50,7 @@ export const createFixTextGpt = async () => {
     }
 }
 
-export const checkTimelineTextGpt = async () => {
+export const checkTimelineTextGpt = async (timelineList) => {
     const END_POINT = BASE_URL + "moderations/suggestions/timeline-safety";
     try {
         const response = await fetch(END_POINT, {
@@ -59,19 +59,14 @@ export const checkTimelineTextGpt = async () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                prompts: [
-                    "hoge",
-                    "huga",
-                    "poko"
-                ],
+                prompts: timelineList,
                 index: [],
             }),
         });
         const data = await response.json();
-        console.log(data)
         return data.response;
     } catch (error) {
         console.log(error);
-        return false;
+        return [];
     }
 }

@@ -1,4 +1,5 @@
 import { checkPostButton } from "./insert"
+import { getTimelinePost } from "./getTimelinePost"
 import type { PlasmoCSConfig } from "plasmo"
  
 export const config: PlasmoCSConfig = {
@@ -15,7 +16,6 @@ const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     // 追加されたノードがある場合
     if (mutation.addedNodes.length) {
-      //console.log(mutation)
       // 追加されたノードを反復処理する
       mutation.addedNodes.forEach((node) => {
         // ノードがHTMLElementの場合
@@ -23,6 +23,10 @@ const observer = new MutationObserver((mutations) => {
           "[data-testid='tweetButton']"
         )) {
           checkPostButton(node)
+        } else if (node instanceof HTMLElement && node.querySelector<HTMLElement>(
+          "[data-testid='tweetText']"
+        )) {
+          getTimelinePost(node)
         }
       })
     }
