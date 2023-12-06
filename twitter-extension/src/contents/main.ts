@@ -1,8 +1,9 @@
-import type { PlasmoCSConfig } from "plasmo"
 import { checkPostButton } from "./insert"
-
+import type { PlasmoCSConfig } from "plasmo"
+ 
 export const config: PlasmoCSConfig = {
-  matches: ["https://twitter.com/*"]
+  matches: ["https://twitter.com/*", "https://x.com/*"],
+  all_frames: true
 }
 
 /**
@@ -14,11 +15,14 @@ const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     // 追加されたノードがある場合
     if (mutation.addedNodes.length) {
+      //console.log(mutation)
       // 追加されたノードを反復処理する
       mutation.addedNodes.forEach((node) => {
         // ノードがHTMLElementの場合
-        if (node instanceof HTMLElement) {
-          checkPostButton()
+        if (node instanceof HTMLElement && node.querySelector<HTMLElement>(
+          "[data-testid='tweetButton']"
+        )) {
+          checkPostButton(node)
         }
       })
     }

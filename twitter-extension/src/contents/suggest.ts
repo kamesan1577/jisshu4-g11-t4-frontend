@@ -1,19 +1,18 @@
 import "../style.css"
-
-import type { PlasmoCSConfig } from "plasmo"
-
 import { publishSuggestion } from "./inputText"
 import { postButton } from "./insert"
-
+import type { PlasmoCSConfig } from "plasmo"
+ 
 export const config: PlasmoCSConfig = {
-  matches: ["https://twitter.com/*"]
+  matches: ["https://twitter.com/*", "https://x.com/*"],
+  all_frames: true
 }
 
 /**
  * 提案を表示する関数
  * @returns {void}
  */
-export const viewSuggestion = () => {
+export const viewSuggestion = (text) => {
   // 提案表示場所の要素を取得
   const targetElement = document.querySelector(
     ".css-175oi2r .r-14lw9ot .r-1h8ys4a"
@@ -34,8 +33,7 @@ export const viewSuggestion = () => {
     // 修正提案テキスト表示作成
     let newText = document.createElement("p")
     newText.classList.add("suggest", "content")
-    // TODO: ここにGPTから返ってきた修正提案テキストを入れる
-    newText.textContent = "少しあなたとは考えが合わないや" // 仮のテキスト
+    newText.textContent = text 
     newElement.appendChild(newText)
 
     // ボタン要素「修正してポストする」を作成
@@ -61,7 +59,7 @@ export const viewSuggestion = () => {
 
     // 「修正してポストする」ボタンをクリックしたときの処理
     newButton.addEventListener("click", () => {
-      publishSuggestion("aiueo!!!")
+      publishSuggestion(text)
     })
   }
   // targetElementが存在しない場合

@@ -1,19 +1,21 @@
-import type { PlasmoCSConfig } from "plasmo"
-
 import { postButton } from "./insert"
-
+import { checkTextGpt } from "./gpt"
+import type { PlasmoCSConfig } from "plasmo"
+ 
 export const config: PlasmoCSConfig = {
-  matches: ["https://twitter.com/*"]
+  matches: ["https://twitter.com/*", "https://x.com/*"],
+  all_frames: true
 }
 
-export const publishSuggestion = (suggestText) => {
-  const textWrapper =
-    fetchTextArea()
+export const publishSuggestion = (suggestText: string) => {
+  const textWrapper = fetchTextArea()
   if (textWrapper) {
-    while (textWrapper.firstChild) {
-      textWrapper.removeChild(textWrapper.firstChild)
+    while (textWrapper.firstChild && textWrapper.firstChild.textContent) {
+      //textWrapper.removeChild(textWrapper.firstChild)
+      textWrapper.firstChild.textContent = "aaa"
     }
     console.log("textWrapper Content was removed!")
+    checkTextGpt()
 
     const newTextNode = document.createTextNode(suggestText)
     textWrapper.appendChild(newTextNode)
@@ -22,6 +24,8 @@ export const publishSuggestion = (suggestText) => {
     )
     console.log("textWrapper Content was changed!")
     postButton.click()
+  } else {
+    console.log("textWrapper was not found!")
   }
 }
 
