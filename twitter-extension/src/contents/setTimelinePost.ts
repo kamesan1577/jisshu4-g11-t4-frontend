@@ -5,6 +5,6 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
-export const setTimelinePost = () => {
+export const setTimelinePost = (checkResult: HTMLElement) => {
     console.log("setTimelinePost");
 }

@@ -43,18 +43,15 @@ const setPostButtonStyle = () => {
     console.log("Button pressed!");
     // ここにボタンが押された時の追加の処理を書くことができます
     if (!isSuggestions) {
-      let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
-      console.log(checkTimelineTextGptResult)
+      //let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
+      //console.log(checkTimelineTextGptResult)
       isSuggestions = true;
-      console.log("Text Checking...");
       try {
         let checkTextGptResult = await checkTextGpt();
 
         if (checkTextGptResult) {
-          console.log("Fix text Loading...");
-          let createFixTextGptResult = await createFixTextGpt();
-          console.log(createFixTextGptResult);
-          viewSuggestion(createFixTextGptResult);
+          console.log("Text Checking...");
+          viewSuggestion(await createFixTextGpt());
         } else {
           console.log("No suggestions!");
         }

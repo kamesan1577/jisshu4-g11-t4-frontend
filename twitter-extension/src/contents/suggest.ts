@@ -12,7 +12,7 @@ export const config: PlasmoCSConfig = {
  * 提案を表示する関数
  * @returns {void}
  */
-export const viewSuggestion = (text) => {
+export const viewSuggestion = (text: string) => {
   // 提案表示場所の要素を取得
   const targetElement = document.querySelector(
     ".css-175oi2r .r-14lw9ot .r-1h8ys4a"
@@ -58,8 +58,8 @@ export const viewSuggestion = (text) => {
     })
 
     // 「修正してポストする」ボタンをクリックしたときの処理
-    newButton.addEventListener("click", () => {
-      publishSuggestion(text)
+    newButton.addEventListener("click", async() => {
+      await publishSuggestion(text)
     })
   }
   // targetElementが存在しない場合
