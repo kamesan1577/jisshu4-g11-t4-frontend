@@ -7,16 +7,16 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
-let timelinePostList = []
+let timelinePostList: HTMLElement[] = []
 
 // ポストのテキストを取得する関数
 // TODO: 取得したテキストをリストに格納する
 export const getTimelinePost = (node: HTMLElement) => {
-  let timelineText = node.querySelector<HTMLElement>(
+  let timelineText: HTMLElement = node.querySelector<HTMLElement>(
     "[data-testid='tweetText']"
   )
   if (timelineText && !timelineText.classList.contains('checkDone')) {
-    timelinePostList.push(timelineText.outerHTML)
+    timelinePostList.push(timelineText)
   }
 }
 

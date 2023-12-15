@@ -1,3 +1,4 @@
+import { time } from "console"
 import type { PlasmoCSConfig } from "plasmo"
 
 export const config: PlasmoCSConfig = {
@@ -50,25 +51,29 @@ export const createFixTextGpt = async () => {
   }
 }
 
-export const checkTimelineTextGpt = async (timelineList) => {
+export const checkTimelineTextGpt = async (timelineList: HTMLElement[]) => {
+  const timelineListFix = timelineList.map(
+    (timelineList) => timelineList.outerHTML
+  )
   const END_POINT = BASE_URL + "moderations/suggestions/timeline-safety"
   try {
-    console.log(timelineList)
-    /*
-        const response = await fetch(END_POINT, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                prompts: timelineList,
-                index: [],
-            }),
-        });
-        const data = await response.json();
-        return data.response;
-    */
-    return []
+    const response = await fetch(END_POINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        prompts: timelineListFix,
+        index: []
+      })
+    })
+    const data = await response.json()
+    const result: Array<{x: HTMLElement, y: number}> = data.response.map(({ post, level }) => ({
+      timelineList: timelineList,
+      level: level
+    }))
+    console.log(data)
+    return result
   } catch (error) {
     console.log("🔴 ERROR  |\n>>>\n" + error + "\n>>>")
     return []
