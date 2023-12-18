@@ -35,7 +35,6 @@ const observer = new MutationObserver(async (mutations) => {
   if (getTimelinePostList().length !== 0) {
     //console.log(getTimelinePostList());
     let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
-    console.log(checkTimelineTextGptResult)
     setTimelinePost(checkTimelineTextGptResult);
   }
   //resetTimelinePostList();
