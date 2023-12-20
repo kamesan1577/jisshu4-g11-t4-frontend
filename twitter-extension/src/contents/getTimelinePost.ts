@@ -1,8 +1,8 @@
+import { Console } from "console"
 import exp from "constants"
 import type { PlasmoCSConfig } from "plasmo"
 
 import { checkTimelineTextGpt } from "./gpt"
-import { Console } from "console"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
@@ -29,23 +29,17 @@ export const resetTimelinePostList = () => {
 
 // ポストのテキストをGPTに送信し、結果を受け取る関数
 export const checkTimelinePost = async (timelineList: HTMLElement[]) => {
-  const timelineListFilter = []
-  const timelineListFormat = []
-  timelineList.forEach((timeline, index) => {
-    const postElement = timeline.querySelector<HTMLElement>("[data-testid='tweetText']")
-    if(postElement) {
-      if (!timelineListFormat.includes(postElement.outerHTML)) {
-        timelineListFilter.push(timelineList[index])
-        timelineListFormat.push(postElement.outerHTML)
-      }
-    }
-  })
+  const timelineListFilter = timelineList.filter((timeline) =>
+    timeline.matches("[data-testid='cellInnerDiv']")
+  )
+  const timelineListFormat = timelineListFilter.map((timeline) =>
+    timeline.querySelector<HTMLElement>("[data-testid='tweetText']").outerHTML
+  )
   resetTimelinePostList()
   const returnGptResult: number[] = await checkTimelineTextGpt([
     ...new Set(timelineListFormat)
   ])
-  const returnGptResultFormat = returnGptResult.map((level, index) =>
-  ({
+  const returnGptResultFormat = returnGptResult.map((level, index) => ({
     timelineList: timelineListFilter[index],
     level: level
   }))

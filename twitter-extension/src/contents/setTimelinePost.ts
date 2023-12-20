@@ -1,30 +1,40 @@
 import type { PlasmoCSConfig } from "plasmo"
- 
+import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
+
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
   all_frames: true
 }
 
-export const setTimelinePost = (checkResult: Array<{timelineList: HTMLElement, level: number}>) => {
+export const setTimelinePost = (
+  checkResult: Array<{ timelineList: HTMLElement; level: number }>
+) => {
   for (let i = 0; i < checkResult.length; i++) {
     if (checkResult[i].level === 2) {
-      checkResult[i].timelineList.style.backgroundColor = "#fff0f5";
-      //checkResult[i].timelineList.remove()
+      checkResult[i].timelineList.style.display = "none"
     } else if (checkResult[i].level === 1) {
-      checkResult[i].timelineList.style.backgroundColor = "#fffff0";
-      /*const spanElement = document.createElement("span");
-      spanElement.textContent = `Level: ${checkResult[i].level}`; 
-      checkResult[i].timelineList.appendChild(spanElement);*/
+      const overlayElement = document.createElement("div")
+      overlayElement.style.cssText = 
+        `position: absolute; top: 50%; left: 50%;
+        width: 100%; height: 98%; transform: translate(-50%, -50%);
+        background-color: #FFFFFF;`
+      checkResult[i].timelineList.appendChild(overlayElement)
+      const overlayElement2 = document.createElement("div")
+      overlayElement2.classList.add("suggest", "suggest-position")
+      overlayElement.appendChild(overlayElement2)
+      const title = document.createElement("p")
+      title.textContent = "過激な投稿の可能性があります。"
+      overlayElement2.appendChild(title)
+      const button = document.createElement("button")
+      button.textContent = "表示する"
+      overlayElement2.appendChild(button)
+      button.addEventListener("click", function() {
+        const parentElement = overlayElement.parentNode;
+        parentElement.removeChild(overlayElement);
+    });
     } else if (checkResult[i].level === 0) {
-      checkResult[i].timelineList.style.backgroundColor = "#f0fff0";
-      /*const spanElement = document.createElement("span");
-      spanElement.textContent = `Level: ${checkResult[i].level}`; 
-      checkResult[i].timelineList.appendChild(spanElement);*/
     } else {
-      checkResult[i].timelineList.style.backgroundColor = "#d3d3d3";
-      /*const spanElement = document.createElement("span");
-      spanElement.textContent = "Sorry, Failed to check..."; 
-      checkResult[i].timelineList.appendChild(spanElement);*/
+      checkResult[i].timelineList.style.backgroundColor = "#d3d3d3"
     }
   }
 }
