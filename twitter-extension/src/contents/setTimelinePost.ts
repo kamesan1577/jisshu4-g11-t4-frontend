@@ -1,5 +1,4 @@
 import type { PlasmoCSConfig } from "plasmo"
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
@@ -33,8 +32,19 @@ export const setTimelinePost = (
         parentElement.removeChild(overlayElement);
     });
     } else if (checkResult[i].level === 0) {
+      const safeAlert = document.createElement("span")
+      safeAlert.style.cssText = 
+        `position: absolute; top: 1px; right: 1px;
+        width: 4px; height: 4px; margin:4px;
+        border-radius: 4px; background-color: #00FF4E;`
+      checkResult[i].timelineList.appendChild(safeAlert)
     } else {
-      checkResult[i].timelineList.style.backgroundColor = "#d3d3d3"
+      const errorAlert = document.createElement("span")
+      errorAlert.style.cssText = 
+        `position: absolute; top: 1px; right: 1px;
+        width: 4px; height: 4px; margin:4px;
+        border-radius: 4px; background-color: #FF0000;`
+      checkResult[i].timelineList.appendChild(errorAlert)
     }
   }
 }
