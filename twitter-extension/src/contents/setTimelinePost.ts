@@ -6,7 +6,6 @@ export const config: PlasmoCSConfig = {
 }
 
 export const setTimelinePost = (checkResult: Array<{timelineList: HTMLElement, level: number}>) => {
-  console.log(checkResult);
   for (let i = 0; i < checkResult.length; i++) {
     if (checkResult[i].level === 2) {
       checkResult[i].timelineList.style.backgroundColor = "#fff0f5";
@@ -20,6 +19,11 @@ export const setTimelinePost = (checkResult: Array<{timelineList: HTMLElement, l
       checkResult[i].timelineList.style.backgroundColor = "#f0fff0";
       /*const spanElement = document.createElement("span");
       spanElement.textContent = `Level: ${checkResult[i].level}`; 
+      checkResult[i].timelineList.appendChild(spanElement);*/
+    } else {
+      checkResult[i].timelineList.style.backgroundColor = "#d3d3d3";
+      /*const spanElement = document.createElement("span");
+      spanElement.textContent = "Sorry, Failed to check..."; 
       checkResult[i].timelineList.appendChild(spanElement);*/
     }
   }

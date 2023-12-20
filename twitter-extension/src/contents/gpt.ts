@@ -54,7 +54,6 @@ export const createFixTextGpt = async () => {
 export const checkTimelineTextGpt = async (timelineList: String[]) => {
   const END_POINT = BASE_URL + "moderations/suggestions/timeline-safety"
   try {
-    
     const response = await fetch(END_POINT, {
       method: "POST",
       headers: {
@@ -66,14 +65,13 @@ export const checkTimelineTextGpt = async (timelineList: String[]) => {
       })
     })
     const data = await response.json()
-    const result: number[] =
-      data.response.map(({ post, level }) => level)
+    const result: number[] = data.response.map(({ post, level }) => level)
     return result
-    
+
     //throw new Error("APIが機能していません")
   } catch (error) {
     console.log("🔴 ERROR  | " + error)
-    const result: number[] = timelineList.map(() => 0)
+    const result: number[] = timelineList.map(() => -1)
     return result
   }
 }
