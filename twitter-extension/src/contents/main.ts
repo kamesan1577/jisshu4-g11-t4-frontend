@@ -1,5 +1,5 @@
 import { checkPostButton } from "./insert"
-import { checkTimelinePost, getTimelinePost, getTimelinePostList, resetTimelinePostList } from "./getTimelinePost"
+import { checkTimelinePost, getTimelinePost, getTimelinePostList } from "./getTimelinePost"
 import type { PlasmoCSConfig } from "plasmo"
 import { setTimelinePost } from "./setTimelinePost"
  

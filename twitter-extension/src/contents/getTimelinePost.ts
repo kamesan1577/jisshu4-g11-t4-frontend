@@ -1,5 +1,3 @@
-import { Console } from "console"
-import exp from "constants"
 import type { PlasmoCSConfig } from "plasmo"
 
 import { checkTimelineTextGpt } from "./gpt"

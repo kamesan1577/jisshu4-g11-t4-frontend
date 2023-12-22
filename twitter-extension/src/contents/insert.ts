@@ -1,6 +1,5 @@
 import { viewSuggestion } from "./suggest"
 import { checkTextGpt, createFixTextGpt } from "./gpt"
-import { checkTimelinePost, getTimelinePostList } from "./getTimelinePost"
 import type { PlasmoCSConfig } from "plasmo"
  
 export const config: PlasmoCSConfig = {

@@ -1,8 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
 
-import { checkTextGpt } from "./gpt"
-import { postButton } from "./insert"
-
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
   all_frames: true

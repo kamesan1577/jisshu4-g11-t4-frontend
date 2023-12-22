@@ -1,4 +1,3 @@
-import { time } from "console"
 import type { PlasmoCSConfig } from "plasmo"
 
 export const config: PlasmoCSConfig = {
