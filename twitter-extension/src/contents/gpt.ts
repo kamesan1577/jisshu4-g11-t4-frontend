@@ -8,7 +8,7 @@ export const config: PlasmoCSConfig = {
 const BASE_URL =
   "https://l3g8ddslol.execute-api.ap-northeast-1.amazonaws.com/dev/"
 
-export const checkTextGpt = async () => {
+export const checkTextGpt = async (postText: String) => {
   const END_POINT = BASE_URL + "moderations/suggestions/safety"
   try {
     const response = await fetch(END_POINT, {
@@ -17,7 +17,7 @@ export const checkTextGpt = async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        prompt: "グダクダしてんじゃねぇよ死ねやカス",
+        prompt: postText,
         user_id: "test"
       })
     })
@@ -29,7 +29,7 @@ export const checkTextGpt = async () => {
   }
 }
 
-export const createFixTextGpt = async () => {
+export const createFixTextGpt = async (postText: String) => {
   const END_POINT = BASE_URL + "moderations"
   try {
     const response = await fetch(END_POINT, {
@@ -38,12 +38,15 @@ export const createFixTextGpt = async () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        prompt: "グダクダしてんじゃねぇよ死ねやカス",
+        prompt: postText,
         user_id: "test"
       })
     })
     const data = await response.json()
-    return data.response
+    return data.response.trim()
+    .replace(/^\"/g, "")
+    .replace(/\"$/g, "")
+    .trim();
   } catch (error) {
     console.log(error)
     return false
@@ -53,6 +56,7 @@ export const createFixTextGpt = async () => {
 export const checkTimelineTextGpt = async (timelineList: String[]) => {
   const END_POINT = BASE_URL + "moderations/suggestions/timeline-safety"
   try {
+    /*
     const response = await fetch(END_POINT, {
       method: "POST",
       headers: {
@@ -66,7 +70,8 @@ export const checkTimelineTextGpt = async (timelineList: String[]) => {
     const data = await response.json()
     const result: number[] = data.response.map(({ post, level }) => level)
     return result
-    //throw new Error("APIが機能していません")
+    */
+    throw new Error("API無効化中")
   } catch (error) {
     console.log("🔴 ERROR  | " + error)
     const result: number[] = timelineList.map(() => -1)

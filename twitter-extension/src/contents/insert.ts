@@ -34,25 +34,31 @@ export const checkPostButton = (node: HTMLElement) => {
  * @param postButton - スタイルを設定するポストボタンの要素
  */
 const setPostButtonStyle = () => {
-  postButton.style.backgroundColor = "#333333";
+  const appendPostButton = document.createElement('button')
+  appendPostButton.textContent = "修正";
+  postButton.parentNode.insertBefore(appendPostButton, postButton);
   console.log("Post button style updated!");
 
   // ボタンがクリックされた時のイベントリスナー
-  postButton.addEventListener("click", async () => { // 非同期関数内でのasyncの追加
+  appendPostButton.addEventListener("click", async () => { // 非同期関数内でのasyncの追加
     console.log("Button pressed!");
-    // ここにボタンが押された時の追加の処理を書くことができます
+    const postText = document.querySelector<HTMLElement>("[data-text='true']").textContent;
+    if (document.querySelector(".suggest")) {
+      isSuggestions = false;
+      document.querySelector(".suggest").remove();
+    }
     if (!isSuggestions) {
-      //let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
-      //console.log(checkTimelineTextGptResult)
       isSuggestions = true;
       try {
-        let checkTextGptResult = await checkTextGpt();
+        let checkTextGptResult = await checkTextGpt(postText);
 
         if (checkTextGptResult) {
           console.log("Text Checking...");
-          viewSuggestion(await createFixTextGpt());
+          viewSuggestion(await createFixTextGpt(postText));
         } else {
           console.log("No suggestions!");
+          isSuggestions = false;
+          //postButton.click();
         }
       } catch (error) {
         console.error("Error occurred:", error);

@@ -2,6 +2,7 @@ import "../style.css"
 import { publishSuggestion } from "./inputText"
 import { postButton } from "./insert"
 import type { PlasmoCSConfig } from "plasmo"
+import { fetchTextArea } from "./inputText"
  
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
@@ -12,7 +13,8 @@ export const config: PlasmoCSConfig = {
  * 提案を表示する関数
  * @returns {void}
  */
-export const viewSuggestion = (text: string) => {
+export const viewSuggestion = (inputText: string) => {
+  const inputTextFix = inputText
   // 提案表示場所の要素を取得
   const targetElement = document.querySelector(
     ".css-175oi2r .r-14lw9ot .r-1h8ys4a"
@@ -33,7 +35,7 @@ export const viewSuggestion = (text: string) => {
     // 修正提案テキスト表示作成
     let newText = document.createElement("p")
     newText.classList.add("suggest", "content")
-    newText.textContent = text 
+    newText.textContent = inputText 
     newElement.appendChild(newText)
 
     // ボタン要素「修正してポストする」を作成
@@ -58,9 +60,16 @@ export const viewSuggestion = (text: string) => {
     })
 
     // 「修正してポストする」ボタンをクリックしたときの処理
-    newButton.addEventListener("click", async() => {
-      await publishSuggestion(text)
+    newButton.addEventListener("click", async(e) => {
+      e.stopPropagation()
+      await publishSuggestion(inputTextFix)
     })
+
+    let textWrapper = fetchTextArea().querySelector('[data-text="true"]')?.parentElement
+
+    textWrapper.addEventListener('onClick', (e) => {
+      console.log('入力値が変更されました: ', e.target);
+    });
   }
   // targetElementが存在しない場合
   else {
