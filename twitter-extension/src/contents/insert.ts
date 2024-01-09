@@ -16,9 +16,15 @@ export let postButton
  */
 export const checkPostButton = (node: HTMLElement) => {
   // ポストボタンを取得
-  postButton = node.querySelector<HTMLElement>(
-    "[data-testid='tweetButton']"
-  )
+  if (node.querySelector<HTMLElement>("[data-testid='tweetButton']")) {
+    postButton = node.querySelector<HTMLElement>(
+      "[data-testid='tweetButton']"
+    )
+  } else if (node.querySelector<HTMLElement>("[data-testid='tweetButtonInline']")) {
+    postButton = node.querySelector<HTMLElement>(
+      "[data-testid='tweetButtonInline']"
+    )
+  }
   // ポストボタンが存在する場合
   if (postButton) {
     setPostButtonStyle()
@@ -35,7 +41,8 @@ export const checkPostButton = (node: HTMLElement) => {
  */
 const setPostButtonStyle = () => {
   const appendPostButton = document.createElement('button')
-  appendPostButton.textContent = "修正";
+  appendPostButton.textContent = "ポストする";
+  appendPostButton.classList.add('fixPostButton')
   postButton.parentNode.insertBefore(appendPostButton, postButton);
   console.log("Post button style updated!");
 
@@ -58,7 +65,7 @@ const setPostButtonStyle = () => {
         } else {
           console.log("No suggestions!");
           isSuggestions = false;
-          //postButton.click();
+          postButton.click();
         }
       } catch (error) {
         console.error("Error occurred:", error);

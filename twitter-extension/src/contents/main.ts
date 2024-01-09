@@ -20,13 +20,9 @@ const observer = new MutationObserver(async (mutations) => {
       // 追加されたノードを反復処理する
       mutation.addedNodes.forEach((node) => {
         // ノードがHTMLElementの場合
-        if (node instanceof HTMLElement && node.querySelector<HTMLElement>(
-          "[data-testid='tweetButton']"
-        )) {
+        if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetButton']") || node.querySelector<HTMLElement>("[data-testid='tweetButtonInline']"))) {
           checkPostButton(node)
-        } else if (node instanceof HTMLElement && node.querySelector<HTMLElement>(
-          "[data-testid='tweetText']"
-        )) {
+        } else if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetText']") || node.querySelector<HTMLElement>("[data-testid='tweetTextarea_0_label']"))) {
           getTimelinePost(node)
         }
       })

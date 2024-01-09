@@ -1,17 +1,13 @@
 import {
-  Button,
   ChakraProvider,
   Divider,
   Select,
   Switch
 } from "@chakra-ui/react"
-import { useState } from "react"
 
 import "./style.css"
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
   return (
     <ChakraProvider>
       <div

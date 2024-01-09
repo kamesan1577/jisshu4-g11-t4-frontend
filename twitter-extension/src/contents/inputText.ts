@@ -1,4 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
+import { postButton } from "./insert"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
@@ -17,10 +18,8 @@ export const publishSuggestion = async (suggestText: string) => {
       
       textWrapper.innerHTML = `<span data-text="true">${suggestText}</span>`;
       textWrapper.dispatchEvent(new Event('input', { 'bubbles': true, 'cancelable': true }));
-      /*
       console.log("textWrapper Content was changed!")
-      //postButton.click()
-      */
+      postButton.click()
     }
   } else {
     console.log("textWrapper was not found!")

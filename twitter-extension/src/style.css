@@ -3,11 +3,23 @@
 @tailwind utilities;
 
 .suggest {
-  background-color: rgba(247, 249, 249, 0.15);
-  margin: 0px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
   padding: 16px 6px;
   border-radius: 10px;
   text-align: center;
+  word-break: auto-phrase;
+}
+
+.suggestLight {
+  background-color: #f6f6f6;
+}
+
+.suggestBlueDark {
+  background-color: #25384B;
+}
+
+.suggestDark {
+  background-color: #2d2d2d;
 }
 
 .suggest p {
@@ -53,4 +65,28 @@
   width: 90%;
   margin: 0px 0px 0px 0px;
   transform: translate(-50%, -50%);
+}
+
+.fixPostButton {
+  background-color: rgb(29, 155, 240);
+  border-color: rgba(0, 0, 0, 0);
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  min-height: 36px;
+  min-width: 36px;
+  padding-left: 17px;
+  padding-right: 17px;
+  margin-left: 12px;
+  border-bottom-left-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  position:absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+[data-testid="tweetButton"] {
+  position:relative;
 }

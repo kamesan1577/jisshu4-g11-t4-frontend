@@ -15,16 +15,37 @@ export const config: PlasmoCSConfig = {
  */
 export const viewSuggestion = (inputText: string) => {
   const inputTextFix = inputText
+  let targetElement;
+  let thema = 'light';
   // 提案表示場所の要素を取得
-  const targetElement = document.querySelector(
-    ".css-175oi2r .r-14lw9ot .r-1h8ys4a"
-  )
+  if(document.querySelector(".css-175oi2r .r-kemksi .r-1h8ys4a")) {
+    targetElement = document.querySelector(
+      ".css-175oi2r .r-kemksi .r-1h8ys4a"
+    )
+    thema = 'dark';
+  } else if(document.querySelector(".css-175oi2r .r-yfoy6g .r-1h8ys4a")) {
+    targetElement = document.querySelector(
+      ".css-175oi2r .r-yfoy6g .r-1h8ys4a"
+    )
+    console.log(targetElement)
+    thema = 'blueDark';
+  } else if(document.querySelector(".css-175oi2r .r-14lw9ot .r-1h8ys4a")) {
+    targetElement = document.querySelector(
+      ".css-175oi2r .r-14lw9ot .r-1h8ys4a"
+    )
+  }
   // 要素が存在する場合
   if (targetElement) {
     // 新しいdiv要素を作成
     // このdivタグ内に提案を表示する
     const newElement = document.createElement("div")
-    newElement.classList.add("suggest")
+    if (thema === 'dark') {
+      newElement.classList.add("suggest", "suggestDark")
+    } else if (thema === 'blueDark') {
+      newElement.classList.add("suggest", "suggestBlueDark")
+    } else {
+      newElement.classList.add("suggest", "suggestLight")
+    }
 
     // タイトルの作成
     const title = document.createElement("p")
@@ -57,12 +78,14 @@ export const viewSuggestion = (inputText: string) => {
     // 「棄却してポストする」ボタンが押されたら、投稿画面上の「ポストする」ボタンを押した扱いとする
     newButton2.addEventListener("click", () => {
       postButton.click()
+      document.querySelector(".suggest").remove()
     })
 
     // 「修正してポストする」ボタンをクリックしたときの処理
     newButton.addEventListener("click", async(e) => {
       e.stopPropagation()
       await publishSuggestion(inputTextFix)
+      document.querySelector(".suggest").remove()
     })
 
     let textWrapper = fetchTextArea().querySelector('[data-text="true"]')?.parentElement
