@@ -7,6 +7,7 @@ export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
   all_frames: true
 }
+export const aaa = "aaa"
 
 /**
  * DOMの変更を監視し、それに応じてアクションを実行するMutation Observer.
