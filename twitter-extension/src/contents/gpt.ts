@@ -5,6 +5,12 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
+let token = "";
+
+chrome.runtime.sendMessage({ method: "getLocalStorage", key: "apiKey" }, function(response) {
+    token = response.data;
+});
+
 const BASE_URL =
   "https://l3g8ddslol.execute-api.ap-northeast-1.amazonaws.com/dev/"
 
@@ -18,7 +24,10 @@ export const checkTextGpt = async (postText: String) => {
       },
       body: JSON.stringify({
         prompt: postText,
-        user_id: "test"
+        user_id: "test",
+        custom_client: {
+          token: token
+        }
       })
     })
     const data = await response.json()
@@ -39,7 +48,10 @@ export const createFixTextGpt = async (postText: String) => {
       },
       body: JSON.stringify({
         prompt: postText,
-        user_id: "test"
+        user_id: "test",
+        custom_client: {
+          token: token
+        }
       })
     })
     const data = await response.json()
@@ -63,7 +75,10 @@ export const checkTimelineTextGpt = async (timelineList: String[]) => {
       },
       body: JSON.stringify({
         prompts: timelineList,
-        index: []
+        index: [],
+        custom_client: {
+          token: token
+        }
       })
     })
     const data = await response.json()
