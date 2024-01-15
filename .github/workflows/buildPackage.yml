@@ -62,6 +62,9 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Check
+        run: ls
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
