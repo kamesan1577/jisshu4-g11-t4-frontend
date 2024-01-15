@@ -36,7 +36,7 @@ jobs:
       run: zip -r build/chrome-mv3-prod.zip build/chrome-mv3-prod/*
 
     - name: Check content of build directory
-      run: ls -al ./twitter-extension/build
+      run: ls -al ./build
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3
