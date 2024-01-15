@@ -32,8 +32,12 @@ jobs:
     - name: Build
       run: npm run build --if-present
 
+    - name: Get package version
+      id: version
+      run: echo "::set-output name=version::$(node -p "require('./twitter-extension/package-lock.json').packages[''].version")"
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: heitan
+        name: heitan-v${{ steps.version.outputs.version }}
         path: ./twitter-extension/build/chrome-mv3-prod/*
