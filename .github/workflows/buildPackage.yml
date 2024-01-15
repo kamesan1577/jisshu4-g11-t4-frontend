@@ -34,7 +34,9 @@ jobs:
 
     - name: Get package version
       id: version
-      run: echo "VERSION=$(node -p \"require('./package-lock.json').packages[''].version\")" >> $GITHUB_ENV
+      run: |
+        VERSION=$(node -p "require('./package-lock.json').packages[''].version")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v3
