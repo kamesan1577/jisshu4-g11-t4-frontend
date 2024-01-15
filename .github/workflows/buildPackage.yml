@@ -17,6 +17,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Check content
+      run: ls
+
     - name: Use Node.js v18.16.0
       uses: actions/setup-node@v3
       with:
