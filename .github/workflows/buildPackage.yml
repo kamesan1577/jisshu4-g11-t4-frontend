@@ -19,9 +19,6 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Check content
-      run: ls
-
     - name: Use Node.js v18.16.0
       uses: actions/setup-node@v3
       with:
@@ -39,7 +36,7 @@ jobs:
       run: zip -r build/chrome-mv3-prod.zip build/chrome-mv3-prod/*
 
     - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: build-artifacts
-        path: build/chrome-mv3-prod.zip
+        path: ./build/chrome-mv3-prod.zip
