@@ -27,6 +27,7 @@ jobs:
       with:
         node-version: v18.16.0
         cache: 'npm'
+        cache-dependency-path: ./twitter-extension/package-lock.json
 
     - name: Install dependencies
       run: npm ci
