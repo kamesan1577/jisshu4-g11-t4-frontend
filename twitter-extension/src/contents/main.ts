@@ -8,6 +8,16 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
+let timeline = "unchecked";
+let post = "unchecked";
+
+chrome.runtime.sendMessage({ method: "getLocalStorage", key: "timelineCheck" }, function(response) {
+  timeline = response.data;
+});
+chrome.runtime.sendMessage({ method: "getLocalStorage", key: "postCheck" }, function(response) {
+  post = response.data;
+});
+
 /**
  * DOMの変更を監視し、それに応じてアクションを実行するMutation Observer.
  * @param {MutationRecord[]} mutations - 発生した変更のリスト。
@@ -20,9 +30,9 @@ const observer = new MutationObserver(async (mutations) => {
       // 追加されたノードを反復処理する
       mutation.addedNodes.forEach((node) => {
         // ノードがHTMLElementの場合
-        if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetButton']") || node.querySelector<HTMLElement>("[data-testid='tweetButtonInline']"))) {
+        if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetButton']") || node.querySelector<HTMLElement>("[data-testid='tweetButtonInline']")) && post === "checked") {
           checkPostButton(node)
-        } else if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetText']") || node.querySelector<HTMLElement>("[data-testid='tweetTextarea_0_label']"))) {
+        } else if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetText']") || node.querySelector<HTMLElement>("[data-testid='tweetTextarea_0_label']")) && timeline === "checked") {
           getTimelinePost(node)
         }
       })
