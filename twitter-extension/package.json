@@ -1,7 +1,7 @@
 {
   "name": "heitan",
   "displayName": "へいたん",
-  "version": "0.9.0",
+  "version": "1.0.1",
   "description": "X（旧: Twitter）の過激な投稿から身を守りましょう。",
   "author": "IniadPractice3 - Group11 Team4",
   "scripts": {
