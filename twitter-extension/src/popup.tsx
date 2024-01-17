@@ -11,12 +11,13 @@ function IndexPopup() {
 
   useEffect(() => {
     chrome.storage.local.get([localStoragePost], (result) => {
-      setPost(result[localStoragePost] === "checked");
+      setPost(result[localStoragePost] === "checked" || result[localStoragePost] === undefined ? true : false);
     });
     chrome.storage.local.get([localStorageTimeline], (result) => {
-      setTimeline(result[localStorageTimeline] === "checked");
+      setTimeline(result[localStorageTimeline] === "checked" || result[localStorageTimeline] === undefined ? true : false);
     });
   }, []);
+  
 
   const handlePostCheckboxChange = (value) => {
     setPost(value);

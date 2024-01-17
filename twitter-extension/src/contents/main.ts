@@ -8,14 +8,17 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
-let timeline = "unchecked";
-let post = "unchecked";
+let timeline = "checked";
+let post = "checked";
 
-chrome.runtime.sendMessage({ method: "getLocalStorage", key: "timelineCheck" }, function(response) {
-  timeline = response.data;
-});
-chrome.runtime.sendMessage({ method: "getLocalStorage", key: "postCheck" }, function(response) {
-  post = response.data;
+chrome.storage.local.get(["timelineCheck", "postCheck", "apiKey"], (result) => {
+  timeline = result["timelineCheck"] === undefined ? "checked" : result["timelineCheck"];
+  post = result["postCheck"] === undefined ? "checked" : result["postCheck"];  
+  if(!(result["apiKey"] === undefined)) {
+    startMutationObserver();
+  } else {
+    console.log("Please set your API key.");
+  }
 });
 
 /**
@@ -47,8 +50,10 @@ const observer = new MutationObserver(async (mutations) => {
 })
 
 // DOMの変更を監視する
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-  characterData: true
-})
+function startMutationObserver() {
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+}

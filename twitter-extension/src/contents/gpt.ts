@@ -7,8 +7,8 @@ export const config: PlasmoCSConfig = {
 
 let token = "";
 
-chrome.runtime.sendMessage({ method: "getLocalStorage", key: "apiKey" }, function(response) {
-    token = response.data;
+chrome.storage.local.get(["apiKey"], (result) => {
+  token = result["apiKey"] || null;
 });
 
 const BASE_URL =
