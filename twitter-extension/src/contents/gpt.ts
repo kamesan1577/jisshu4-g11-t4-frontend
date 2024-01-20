@@ -12,7 +12,7 @@ chrome.storage.local.get(["apiKey"], (result) => {
 });
 
 const BASE_URL =
-  "https://l3g8ddslol.execute-api.ap-northeast-1.amazonaws.com/dev/"
+  "https://0htjwvzstd.execute-api.ap-northeast-1.amazonaws.com/master/"
 
 export const checkTextGpt = async (postText: String) => {
   const END_POINT = BASE_URL + "moderations/suggestions/safety"
