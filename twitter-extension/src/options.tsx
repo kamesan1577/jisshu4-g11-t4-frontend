@@ -69,7 +69,7 @@ function Options() {
         <div className="py-3">
           <Alert status="warning">
             <AlertIcon />
-            へいたんは、タイムラインの検閲やポスト文の検閲にOpenAI APIを使用しています。利用量に応じた料金が発生します。
+            へいたんは、タイムラインの検閲やポスト文の検閲にOpenAI APIを使用しています。利用量に応じた料金が発生します。 <a className="underline" href="https://platform.openai.com/api-keys">OpenAI API発行ページ</a>
           </Alert>
         </div>
         <div className="p-3">

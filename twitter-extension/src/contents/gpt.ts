@@ -17,18 +17,27 @@ const BASE_URL =
 export const checkTextGpt = async (postText: String) => {
   const END_POINT = BASE_URL + "moderations/suggestions/safety"
   try {
-    const response = await fetch(END_POINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+    let body;
+    if(token) {
+      body = {
         prompt: postText,
         user_id: "test",
         custom_client: {
           token: token
         }
-      })
+      }
+    } else {
+      body = {
+        prompt: postText,
+        user_id: "test"
+      }
+    }
+    const response = await fetch(END_POINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     })
     const data = await response.json()
     return data.is_required_moderation
@@ -41,18 +50,27 @@ export const checkTextGpt = async (postText: String) => {
 export const createFixTextGpt = async (postText: String) => {
   const END_POINT = BASE_URL + "moderations"
   try {
-    const response = await fetch(END_POINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+    let body;
+    if(token) {
+      body = {
         prompt: postText,
         user_id: "test",
         custom_client: {
           token: token
         }
-      })
+      }
+    } else {
+      body = {
+        prompt: postText,
+        user_id: "test"
+      }
+    }
+    const response = await fetch(END_POINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     })
     const data = await response.json()
     return data.response.trim()
@@ -68,18 +86,27 @@ export const createFixTextGpt = async (postText: String) => {
 export const checkTimelineTextGpt = async (timelineList: String[]) => {
   const END_POINT = BASE_URL + "moderations/suggestions/timeline-safety"
   try {
-    const response = await fetch(END_POINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+    let body;
+    if(token) {
+      body = {
         prompts: timelineList,
         index: [],
         custom_client: {
           token: token
         }
-      })
+      }
+    } else {
+      body = {
+        prompts: timelineList,
+        index: []
+      }
+    }
+    const response = await fetch(END_POINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     })
     const data = await response.json()
     const result: number[] = data.response.map(({ post, level }) => level)

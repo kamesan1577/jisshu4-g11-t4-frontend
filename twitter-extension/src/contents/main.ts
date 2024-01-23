@@ -1,25 +1,33 @@
-import { checkPostButton } from "./insert"
-import { checkTimelinePost, getTimelinePost, getTimelinePostList } from "./getTimelinePost"
 import type { PlasmoCSConfig } from "plasmo"
+
+import {
+  checkTimelinePost,
+  getTimelinePost,
+  getTimelinePostList
+} from "./getTimelinePost"
+import { checkPostButton } from "./insert"
 import { setTimelinePost } from "./setTimelinePost"
- 
+
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*", "https://x.com/*"],
   all_frames: true
 }
 
-let timeline = "checked";
-let post = "checked";
+let timeline = "checked"
+let post = "checked"
 
 chrome.storage.local.get(["timelineCheck", "postCheck", "apiKey"], (result) => {
-  timeline = result["timelineCheck"] === undefined ? "checked" : result["timelineCheck"];
-  post = result["postCheck"] === undefined ? "checked" : result["postCheck"];  
-  if(!(result["apiKey"] === undefined)) {
-    startMutationObserver();
+  timeline =
+    result["timelineCheck"] === undefined ? "checked" : result["timelineCheck"]
+  post = result["postCheck"] === undefined ? "checked" : result["postCheck"]
+  if (result["apiKey"] === undefined || result["apiKey"] === null || result["apiKey"] === "") {
+    console.log("INIAD AI-MOPを利用します。")
+    startMutationObserver()
   } else {
-    console.log("Please set your API key.");
+    console.log("個人のトークンを利用します。")
+    startMutationObserver()
   }
-});
+})
 
 /**
  * DOMの変更を監視し、それに応じてアクションを実行するMutation Observer.
@@ -33,9 +41,23 @@ const observer = new MutationObserver(async (mutations) => {
       // 追加されたノードを反復処理する
       mutation.addedNodes.forEach((node) => {
         // ノードがHTMLElementの場合
-        if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetButton']") || node.querySelector<HTMLElement>("[data-testid='tweetButtonInline']")) && post === "checked") {
+        if (
+          node instanceof HTMLElement &&
+          (node.querySelector<HTMLElement>("[data-testid='tweetButton']") ||
+            node.querySelector<HTMLElement>(
+              "[data-testid='tweetButtonInline']"
+            )) &&
+          post === "checked"
+        ) {
           checkPostButton(node)
-        } else if (node instanceof HTMLElement && (node.querySelector<HTMLElement>("[data-testid='tweetText']") || node.querySelector<HTMLElement>("[data-testid='tweetTextarea_0_label']")) && timeline === "checked") {
+        } else if (
+          node instanceof HTMLElement &&
+          (node.querySelector<HTMLElement>("[data-testid='tweetText']") ||
+            node.querySelector<HTMLElement>(
+              "[data-testid='tweetTextarea_0_label']"
+            )) &&
+          timeline === "checked"
+        ) {
           getTimelinePost(node)
         }
       })
@@ -43,8 +65,10 @@ const observer = new MutationObserver(async (mutations) => {
   })
   if (getTimelinePostList().length !== 0) {
     //console.log(getTimelinePostList());
-    let checkTimelineTextGptResult = await checkTimelinePost(getTimelinePostList())
-    setTimelinePost(checkTimelineTextGptResult);
+    let checkTimelineTextGptResult = await checkTimelinePost(
+      getTimelinePostList()
+    )
+    setTimelinePost(checkTimelineTextGptResult)
   }
   //resetTimelinePostList();
 })
@@ -55,5 +79,5 @@ function startMutationObserver() {
     childList: true,
     subtree: true,
     characterData: true
-  });
+  })
 }
